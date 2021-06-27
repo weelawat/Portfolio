@@ -7,6 +7,7 @@ import glob
 import os
 import xlsxwriter
 
+#Input patch file function
 def inputpf():
     #Input patch file
     pf = input("Drag folder here or Enter patch file:") 
@@ -15,6 +16,7 @@ def inputpf():
         pf = pf[:-1]
     return pf
 
+#Mark function
 def markim(pf):
     #List tiff file
     patchfile = glob.glob(pf + "/" + "*.tiff")
@@ -106,6 +108,7 @@ def markim(pf):
     print("Done!!!\n")
     Image.fromarray(gimarray)
 
+#Main loop
 while True:   
     try:
         pf = inputpf()
