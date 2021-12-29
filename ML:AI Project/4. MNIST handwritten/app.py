@@ -13,12 +13,12 @@ def predict_digit(img):
     #convert rgb to grayscale
     img = img.convert('L')
     img = np.array(img)
+    img = 1 - img.astype("float32")/255
     #reshaping to support our model input and normalizing
-    img = img.reshape(1,28,28,1)
-    img = img/255.0
+    img = img.reshape(1, 28, 28, 1)
     #predicting the class
-    res = model.predict([img])[0]
-    return np.argmax(res), max(res)
+    predict_value = model.predict(img)[0]
+    return np.argmax(predict_value), max(predict_value)
 
 class App(tk.Tk):
     def __init__(self):
@@ -48,8 +48,7 @@ class App(tk.Tk):
     def classify_handwriting(self):
         x0=self.winfo_rootx()+self.canvas.winfo_x()
         y0=self.winfo_rooty()+self.canvas.winfo_y()+100
-        im = ImageGrab.grab((x0, y0, x0+600, y0+600))
-        im.show()
+        im = ImageGrab.grab((x0+50, y0, x0+550, y0+550))
         digit, acc = predict_digit(im)
         self.label.configure(text= str(digit)+', '+ str(int(acc*100))+'%')
     
